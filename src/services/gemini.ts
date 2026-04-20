@@ -1,10 +1,35 @@
 import { GoogleGenAI } from "@google/genai";
 import { ChatMessage } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+function getAIInstance() {
+  if (!aiInstance) {
+    // Safely check for GEMINI_API_KEY without relying on global process object existence
+    let apiKey: string | undefined;
+    try {
+      apiKey = process.env.GEMINI_API_KEY;
+    } catch (e) {
+      // process.env might be completely missing in some browser environments
+      console.warn("process.env is not available in this environment.");
+    }
+
+    if (!apiKey || apiKey === "undefined" || apiKey === "MY_GEMINI_API_KEY") {
+      console.warn("GEMINI_API_KEY is missing or using placeholder. AI features will be limited.");
+      return null;
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+}
 
 export async function askCustomsAI(history: ChatMessage[], question: string) {
   try {
+    const ai = getAIInstance();
+    if (!ai) {
+      return "I'm sorry, I'm currently unable to access the Customs AI advisor. Please contact your system administrator or check the manual procedures.";
+    }
+
     const systemInstruction = `
       You are an expert Malaysia Customs Assistant.
       You help Customs officers with information about HS codes, Customs Act 1967, import/export procedures, and excise duties.
