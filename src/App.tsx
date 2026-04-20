@@ -17,6 +17,7 @@ import {
   FileText,
   ShieldCheck,
   ChevronRight,
+  ArrowDown,
   Plus,
   Scale,
   Globe,
@@ -557,18 +558,9 @@ function ProceduresView() {
                   <div className="space-y-3">
                     <h4 className="text-[11px] font-bold text-[#606770] uppercase tracking-widest flex items-center gap-2">
                       <LayoutDashboard size={14} className="text-[#1A3066]" />
-                      Procedural Steps
+                      Procedural Workflow
                     </h4>
-                    <div className="space-y-3">
-                       {selectedProc.steps.map((step, idx) => (
-                         <div key={idx} className="flex gap-3 text-sm">
-                            <div className="w-5 h-5 rounded-full bg-[#1A3066] text-white flex items-center justify-center text-[10px] shrink-0 font-bold">
-                              {idx + 1}
-                            </div>
-                            <span className="text-[#1C1E21]">{step}</span>
-                         </div>
-                       ))}
-                    </div>
+                    <ProcedureFlowchart steps={selectedProc.steps} />
                   </div>
 
                   <div className="space-y-3">
@@ -1001,5 +993,46 @@ function PromptSuggestion({ text, onClick }: { text: string, onClick: (t: string
     >
       {text}
     </button>
+  );
+}
+
+function ProcedureFlowchart({ steps }: { steps: string[] }) {
+  return (
+    <div className="py-4 px-2 space-y-0 flex flex-col items-center">
+      {steps.map((step, idx) => (
+        <React.Fragment key={idx}>
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1 }}
+            className="w-full"
+          >
+            <div className="relative group p-4 bg-white border-2 border-[#F2F3F5] rounded-xl hover:border-[#1A3066] transition-all shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-6 h-6 rounded-lg bg-[#1A3066] text-[#D4AF37] flex items-center justify-center text-[10px] font-bold shrink-0 shadow-md">
+                  {idx + 1}
+                </div>
+                <p className="text-sm font-medium text-[#1C1E21] leading-snug">{step}</p>
+              </div>
+              
+              {/* Highlight bar inside step */}
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#D4AF37] rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          </motion.div>
+          
+          {idx < steps.length - 1 && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 24, opacity: 1 }}
+              transition={{ delay: idx * 0.1 + 0.05 }}
+              className="flex flex-col items-center"
+            >
+              <div className="w-0.5 h-full bg-gradient-to-b from-[#1A3066] to-[#D4AF37] opacity-20" />
+              <ArrowDown size={14} className="text-[#D4AF37] -mt-1" />
+            </motion.div>
+          )}
+        </React.Fragment>
+      ))}
+    </div>
   );
 }
