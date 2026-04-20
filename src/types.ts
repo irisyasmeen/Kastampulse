@@ -42,3 +42,10 @@ export interface TradeAgreement {
   key_benefits: string[];
   pdf_url: string;
 }
+
+export interface Legislation {
+  id: string;
+  title: string;
+  category: string;
+  url: string;
+}

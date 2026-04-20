@@ -24,9 +24,9 @@ import {
   Info
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { mockHSCodes, mockProcedures, mockCirculars, mockTradeAgreements } from './data';
+import { mockHSCodes, mockProcedures, mockCirculars, mockTradeAgreements, mockLegislations } from './data';
 import { askCustomsAI } from './services/gemini';
-import { ChatMessage, HSCode, Procedure, TradeAgreement } from './types';
+import { ChatMessage, HSCode, Procedure, TradeAgreement, Legislation } from './types';
 
 type ActiveTab = 'dashboard' | 'procedures' | 'hs-search' | 'legal' | 'trade' | 'library' | 'ai-assistant';
 
@@ -616,11 +616,15 @@ function ProcedureItem({ title, active }: { title: string, active?: boolean }) {
 }
 
 function LegalView() {
+  const customsLeg = mockLegislations.filter(l => l.category === 'Customs Legislation');
+  const exciseTax = mockLegislations.filter(l => l.category === 'Excise & Sales Tax');
+  const associatedActs = mockLegislations.filter(l => l.category === 'Associated Acts');
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-      <KBGroup title="Customs Legislation" items={['Customs Act 1967', 'Customs Regulations 2019', 'Customs (Values) Rules 2012', 'Customs (Prohibition of Imports) 2023']} />
-      <KBGroup title="Excise & Sales Tax" items={['Excise Act 1976', 'Sales Tax Act 2018', 'Service Tax Act 2018', 'Excise (Sale of Intoxicating Liquor)']} />
-      <KBGroup title="Associated Acts" items={['Free Zones Act 1990', 'Strategic Trade Act 2010', 'Dangerous Drugs Act 1952', 'Anti-Money Laundering Act (AMLA)']} />
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-width-7xl mx-auto">
+      <KBGroup title="Customs Legislation" items={customsLeg} />
+      <KBGroup title="Excise & Sales Tax" items={exciseTax} />
+      <KBGroup title="Associated Acts" items={associatedActs} />
       <div className="lg:col-span-3 card bg-white border-l-8 border-[#CC0000]">
         <div className="flex items-start gap-4">
            <div className="bg-[#FFEBEB] p-3 rounded-xl text-[#CC0000]">
@@ -950,19 +954,40 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-function KBGroup({ title, items }: { title: string, items: string[] }) {
+function KBGroup({ title, items }: { title: string, items: (string | Legislation)[] }) {
   return (
     <div className="card h-full flex flex-col p-0">
       <div className="bg-[#1A3066] p-4 text-white">
         <h4 className="font-bold uppercase text-[11px] tracking-widest">{title}</h4>
       </div>
       <div className="p-4 space-y-1 flex-1">
-        {items.map(item => (
-          <button key={item} className="w-full text-left p-2.5 text-sm text-[#1C1E21] font-medium hover:bg-[#F2F3F5] rounded-lg transition-all flex items-center justify-between group border border-transparent hover:border-[#DADDE1]">
-            {item}
-            <ChevronRight size={14} className="text-[#DADDE1] group-hover:text-[#1A3066] transition-all" />
-          </button>
-        ))}
+        {items.map(item => {
+          const isObject = typeof item === 'object';
+          const label = isObject ? item.title : item;
+          const url = isObject ? item.url : null;
+
+          if (url) {
+            return (
+              <a 
+                key={label} 
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full text-left p-2.5 text-sm text-[#1C1E21] font-medium hover:bg-[#F2F3F5] rounded-lg transition-all flex items-center justify-between group border border-transparent hover:border-[#DADDE1]"
+              >
+                {label}
+                <ChevronRight size={14} className="text-[#DADDE1] group-hover:text-[#1A3066] transition-all" />
+              </a>
+            );
+          }
+
+          return (
+            <button key={label} className="w-full text-left p-2.5 text-sm text-[#1C1E21] font-medium hover:bg-[#F2F3F5] rounded-lg transition-all flex items-center justify-between group border border-transparent hover:border-[#DADDE1]">
+              {label}
+              <ChevronRight size={14} className="text-[#DADDE1] group-hover:text-[#1A3066] transition-all" />
+            </button>
+          );
+        })}
       </div>
     </div>
   );

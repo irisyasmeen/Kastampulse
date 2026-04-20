@@ -1,4 +1,4 @@
-import { HSCode, Procedure, Circular, TradeAgreement } from './types';
+import { HSCode, Procedure, Circular, TradeAgreement, Legislation } from './types';
 
 export const mockHSCodes: HSCode[] = [
   { 
@@ -189,4 +189,24 @@ export const mockTradeAgreements: TradeAgreement[] = [
     key_benefits: ['Preferential tariff rates', 'Capacity building', 'Technical cooperation'],
     pdf_url: 'https://www.mofa.go.jp/region/asia-paci/malaysia/epa/agreement.pdf'
   }
+];
+
+export const mockLegislations: Legislation[] = [
+  // Customs Legislation
+  { id: 'leg-01', title: 'Customs Act 1967', category: 'Customs Legislation', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=235' },
+  { id: 'leg-02', title: 'Customs Regulations 2019', category: 'Customs Legislation', url: 'https://www.customs.gov.my/en/cp/Pages/Customs-Regulations-2019.aspx' },
+  { id: 'leg-03', title: 'Customs (Values) Rules 2012', category: 'Customs Legislation', url: 'https://www.customs.gov.my/en/cp/Pages/Customs-(Values)-Rules-2012.aspx' },
+  { id: 'leg-04', title: 'Customs (Prohibition of Imports) 2023', category: 'Customs Legislation', url: 'https://www.customs.gov.my/en/cp/Pages/Customs-(Prohibition-of-Imports)-Order-2023.aspx' },
+  
+  // Excise & Sales Tax
+  { id: 'leg-05', title: 'Excise Act 1976', category: 'Excise & Sales Tax', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=176' },
+  { id: 'leg-06', title: 'Sales Tax Act 2018', category: 'Excise & Sales Tax', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=806' },
+  { id: 'leg-07', title: 'Service Tax Act 2018', category: 'Excise & Sales Tax', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=807' },
+  { id: 'leg-08', title: 'Excise (Sale of Intoxicating Liquor)', category: 'Excise & Sales Tax', url: 'https://www.customs.gov.my/en/cp/Pages/Excise-(Sale-of-Intoxicating-Liquor)-Rules-1977.aspx' },
+  
+  // Associated Acts
+  { id: 'leg-09', title: 'Free Zones Act 1990', category: 'Associated Acts', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=438' },
+  { id: 'leg-10', title: 'Strategic Trade Act 2010', category: 'Associated Acts', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=708' },
+  { id: 'leg-11', title: 'Dangerous Drugs Act 1952', category: 'Associated Acts', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=234' },
+  { id: 'leg-12', title: 'Anti-Money Laundering Act (AMLA)', category: 'Associated Acts', url: 'https://lom.agc.gov.my/ilms/common/download_pdf.php?type=act&lang=BI&act_id=613' }
 ];
