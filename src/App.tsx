@@ -772,9 +772,14 @@ function TradeView() {
                   </div>
 
                   <div className="pt-6 border-t border-[#DADDE1] flex flex-col gap-3">
-                    <button className="btn-primary w-full py-3 text-xs flex items-center justify-center gap-2 shadow-lg">
+                    <a 
+                      href={selectedAgreement.pdf_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="btn-primary w-full py-3 text-xs flex items-center justify-center gap-2 shadow-lg text-center"
+                    >
                       <FileText size={16} /> VIEW FULL TEXT (PDF)
-                    </button>
+                    </a>
                     <button className="w-full border border-[#DADDE1] text-[#1A3066] font-bold rounded-lg py-3 text-xs hover:bg-[#F2F3F5] transition-all flex items-center justify-center gap-2">
                       CERTIFICATE VERIFICATION (E-PCO)
                     </button>

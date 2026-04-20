@@ -142,7 +142,8 @@ export const mockTradeAgreements: TradeAgreement[] = [
     member_countries: ['Brunei', 'Cambodia', 'Indonesia', 'Laos', 'Malaysia', 'Myanmar', 'Philippines', 'Singapore', 'Thailand', 'Vietnam'],
     description: 'The main agreement for trade in goods within ASEAN, aiming to achieve a single market and production base.',
     status: 'In Force',
-    key_benefits: ['Zero-duty for most goods', 'Common rules of origin', 'Simplified customs procedures']
+    key_benefits: ['Zero-duty for most goods', 'Common rules of origin', 'Simplified customs procedures'],
+    pdf_url: 'https://asean.org/wp-content/uploads/2021/01/ATIGA-Full-Text-Official-Final-26-Feb-2009.pdf'
   },
   {
     id: 'rcep',
@@ -152,7 +153,8 @@ export const mockTradeAgreements: TradeAgreement[] = [
     member_countries: ['ASEAN-10', 'Australia', 'China', 'Japan', 'Korea', 'New Zealand'],
     description: 'The world\'s largest FTA, covering 30% of global GDP and population.',
     status: 'In Force',
-    key_benefits: ['Harmonized Rules of Origin', 'E-commerce chapters', 'Intellectual Property protection']
+    key_benefits: ['Harmonized Rules of Origin', 'E-commerce chapters', 'Intellectual Property protection'],
+    pdf_url: 'https://rcepsec.org/wp-content/uploads/2020/11/RCEP-Agreement.pdf'
   },
   {
     id: 'cptpp',
@@ -162,7 +164,8 @@ export const mockTradeAgreements: TradeAgreement[] = [
     member_countries: ['Australia', 'Brunei', 'Canada', 'Chile', 'Japan', 'Malaysia', 'Mexico', 'New Zealand', 'Peru', 'Singapore', 'Vietnam', 'UK'],
     description: 'A high-standard agreement addressing new trade issues and traditional barriers.',
     status: 'In Force',
-    key_benefits: ['High-level liberalisation', 'Labor and Environmental standards', 'SME support']
+    key_benefits: ['High-level liberalisation', 'Labor and Environmental standards', 'SME support'],
+    pdf_url: 'https://www.mfat.govt.nz/assets/Trans-Pacific-Partnership/CPTPP/Comprehensive-and-Progressive-Agreement-for-Trans-Pacific-Partnership-CPTPP-English.pdf'
   },
   {
     id: 'mafta',
@@ -172,7 +175,8 @@ export const mockTradeAgreements: TradeAgreement[] = [
     member_countries: ['Malaysia', 'Australia'],
     description: 'A comprehensive agreement that complements existing RCEP and ASEAN-Australia-NZ FTA relations.',
     status: 'In Force',
-    key_benefits: ['Elimination of tariffs', 'Greater services market access', 'Investment protection']
+    key_benefits: ['Elimination of tariffs', 'Greater services market access', 'Investment protection'],
+    pdf_url: 'https://www.dfat.gov.au/sites/default/files/mafta-full-text.pdf'
   },
   {
     id: 'mjepa',
@@ -182,6 +186,7 @@ export const mockTradeAgreements: TradeAgreement[] = [
     member_countries: ['Malaysia', 'Japan'],
     description: 'Malaysia\'s first bilateral FTA, focusing on trade liberalization and economic cooperation.',
     status: 'In Force',
-    key_benefits: ['Preferential tariff rates', 'Capacity building', 'Technical cooperation']
+    key_benefits: ['Preferential tariff rates', 'Capacity building', 'Technical cooperation'],
+    pdf_url: 'https://www.mofa.go.jp/region/asia-paci/malaysia/epa/agreement.pdf'
   }
 ];

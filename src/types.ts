@@ -40,4 +40,5 @@ export interface TradeAgreement {
   description: string;
   status: 'In Force' | 'Signed' | 'Under Negotiation';
   key_benefits: string[];
+  pdf_url: string;
 }
