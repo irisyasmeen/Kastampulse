@@ -1,4 +1,4 @@
-import { HSCode, Procedure, Circular } from './types';
+import { HSCode, Procedure, Circular, TradeAgreement } from './types';
 
 export const mockHSCodes: HSCode[] = [
   { 
@@ -130,5 +130,58 @@ export const mockCirculars: Circular[] = [
     date: '2026-03-25',
     tags: ['Duty', 'Electronics'],
     summary: 'New duty structures for high-end consumer electronics effective immediately.'
+  }
+];
+
+export const mockTradeAgreements: TradeAgreement[] = [
+  {
+    id: 'atiga',
+    name: 'ASEAN Trade in Goods Agreement',
+    acronym: 'ATIGA',
+    type: 'Regional',
+    member_countries: ['Brunei', 'Cambodia', 'Indonesia', 'Laos', 'Malaysia', 'Myanmar', 'Philippines', 'Singapore', 'Thailand', 'Vietnam'],
+    description: 'The main agreement for trade in goods within ASEAN, aiming to achieve a single market and production base.',
+    status: 'In Force',
+    key_benefits: ['Zero-duty for most goods', 'Common rules of origin', 'Simplified customs procedures']
+  },
+  {
+    id: 'rcep',
+    name: 'Regional Comprehensive Economic Partnership',
+    acronym: 'RCEP',
+    type: 'Regional',
+    member_countries: ['ASEAN-10', 'Australia', 'China', 'Japan', 'Korea', 'New Zealand'],
+    description: 'The world\'s largest FTA, covering 30% of global GDP and population.',
+    status: 'In Force',
+    key_benefits: ['Harmonized Rules of Origin', 'E-commerce chapters', 'Intellectual Property protection']
+  },
+  {
+    id: 'cptpp',
+    name: 'Comprehensive and Progressive Agreement for Trans-Pacific Partnership',
+    acronym: 'CPTPP',
+    type: 'Regional',
+    member_countries: ['Australia', 'Brunei', 'Canada', 'Chile', 'Japan', 'Malaysia', 'Mexico', 'New Zealand', 'Peru', 'Singapore', 'Vietnam', 'UK'],
+    description: 'A high-standard agreement addressing new trade issues and traditional barriers.',
+    status: 'In Force',
+    key_benefits: ['High-level liberalisation', 'Labor and Environmental standards', 'SME support']
+  },
+  {
+    id: 'mafta',
+    name: 'Malaysia-Australia Free Trade Agreement',
+    acronym: 'MAFTA',
+    type: 'Bilateral',
+    member_countries: ['Malaysia', 'Australia'],
+    description: 'A comprehensive agreement that complements existing RCEP and ASEAN-Australia-NZ FTA relations.',
+    status: 'In Force',
+    key_benefits: ['Elimination of tariffs', 'Greater services market access', 'Investment protection']
+  },
+  {
+    id: 'mjepa',
+    name: 'Malaysia-Japan Economic Partnership Agreement',
+    acronym: 'MJEPA',
+    type: 'Bilateral',
+    member_countries: ['Malaysia', 'Japan'],
+    description: 'Malaysia\'s first bilateral FTA, focusing on trade liberalization and economic cooperation.',
+    status: 'In Force',
+    key_benefits: ['Preferential tariff rates', 'Capacity building', 'Technical cooperation']
   }
 ];

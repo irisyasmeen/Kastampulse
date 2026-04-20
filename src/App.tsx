@@ -24,9 +24,9 @@ import {
   Info
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { mockHSCodes, mockProcedures, mockCirculars } from './data';
+import { mockHSCodes, mockProcedures, mockCirculars, mockTradeAgreements } from './data';
 import { askCustomsAI } from './services/gemini';
-import { ChatMessage, HSCode, Procedure } from './types';
+import { ChatMessage, HSCode, Procedure, TradeAgreement } from './types';
 
 type ActiveTab = 'dashboard' | 'procedures' | 'hs-search' | 'legal' | 'trade' | 'library' | 'ai-assistant';
 
@@ -637,37 +637,153 @@ function LegalView() {
 }
 
 function TradeView() {
+  const [selectedAgreement, setSelectedAgreement] = useState<TradeAgreement | null>(null);
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="card">
-          <SectionHeader title="Regional Agreements" />
-          <div className="mt-4 space-y-2">
-            {['ASEAN Trade in Goods (ATIGA)', 'CPTPP (Trans-Pacific Partnership)', 'RCEP (Regional Comprehensive Eco)', 'AFTA (ASEAN Free Trade)'].map(item => (
-               <button key={item} className="w-full text-left p-4 bg-[#F8FAFC] rounded-xl border border-[#DADDE1] flex items-center justify-between group hover:border-[#1A3066] transition-all">
-                  <div>
-                    <h5 className="font-bold text-sm text-[#1A3066]">{item}</h5>
-                    <p className="text-[11px] text-[#606770] mt-0.5">Preferential Tariff Certificate requirement applies.</p>
-                  </div>
-                  <Globe size={18} className="text-[#DADDE1] group-hover:text-[#D4AF37] transition-all" />
-               </button>
-            ))}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-[#1A3066] p-6 rounded-xl text-white gap-4 shadow-lg">
+        <div>
+          <h3 className="text-xl font-bold">International Trade Agreements</h3>
+          <p className="text-sm opacity-80 mt-1 text-[#D4AF37]">Monitoring preferential tariff treatment frameworks.</p>
+        </div>
+        <div className="bg-white/10 px-4 py-2 rounded-lg border border-white/20 flex items-center gap-3">
+          <Info size={18} className="text-[#D4AF37]" />
+          <p className="text-xs font-medium">Verify "Rules of Origin" before granting preferential rates.</p>
+        </div>
+      </div>
+
+      <div className={`grid grid-cols-1 ${selectedAgreement ? 'lg:grid-cols-[1.5fr_1fr]' : 'lg:grid-cols-2'} gap-6 transition-all duration-300`}>
+        <div className="space-y-6">
+          <div className="card">
+            <SectionHeader title="Regional Agreements (FTA)" />
+            <div className="mt-4 grid grid-cols-1 gap-2">
+              {mockTradeAgreements.filter(a => a.type === 'Regional').map(item => (
+                 <button 
+                   key={item.id} 
+                   onClick={() => setSelectedAgreement(item)}
+                   className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between group ${
+                     selectedAgreement?.id === item.id 
+                       ? 'bg-[#1A3066] border-[#1A3066] text-white shadow-md' 
+                       : 'bg-[#F8FAFC] border-[#DADDE1] hover:border-[#1A3066] text-[#1C1E21]'
+                   }`}
+                 >
+                    <div>
+                      <h5 className={`font-bold text-sm ${selectedAgreement?.id === item.id ? 'text-[#D4AF37]' : 'text-[#1A3066]'}`}>{item.name} ({item.acronym})</h5>
+                      <p className={`text-[11px] mt-0.5 ${selectedAgreement?.id === item.id ? 'text-white/70' : 'text-[#606770]'}`}>
+                        Status: <span className="font-bold">{item.status}</span>
+                      </p>
+                    </div>
+                    <Globe size={18} className={`${selectedAgreement?.id === item.id ? 'text-[#D4AF37]' : 'text-[#DADDE1] group-hover:text-[#D4AF37]'} transition-all`} />
+                 </button>
+              ))}
+            </div>
+          </div>
+          <div className="card">
+            <SectionHeader title="Bilateral Agreements" />
+            <div className="mt-4 grid grid-cols-1 gap-2">
+              {mockTradeAgreements.filter(a => a.type === 'Bilateral').map(item => (
+                 <button 
+                   key={item.id} 
+                   onClick={() => setSelectedAgreement(item)}
+                   className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between group ${
+                     selectedAgreement?.id === item.id 
+                       ? 'bg-[#1A3066] border-[#1A3066] text-white shadow-md' 
+                       : 'bg-[#F8FAFC] border-[#DADDE1] hover:border-[#1A3066] text-[#1C1E21]'
+                   }`}
+                 >
+                    <div>
+                      <h5 className={`font-bold text-sm ${selectedAgreement?.id === item.id ? 'text-[#D4AF37]' : 'text-[#1A3066]'}`}>{item.name} ({item.acronym})</h5>
+                      <p className={`text-[11px] mt-0.5 ${selectedAgreement?.id === item.id ? 'text-white/70' : 'text-[#606770]'}`}>
+                        Status: <span className="font-bold">{item.status}</span>
+                      </p>
+                    </div>
+                    <Globe size={18} className={`${selectedAgreement?.id === item.id ? 'text-[#D4AF37]' : 'text-[#DADDE1] group-hover:text-[#D4AF37]'} transition-all`} />
+                 </button>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="card">
-          <SectionHeader title="Bilateral Agreements" />
-          <div className="mt-4 space-y-2">
-            {['Malaysia-Australia (MAFTA)', 'Malaysia-New Zealand (MNZFTA)', 'Malaysia-India (MICECA)', 'Malaysia-Japan (MJEPA)'].map(item => (
-               <button key={item} className="w-full text-left p-4 bg-[#F8FAFC] rounded-xl border border-[#DADDE1] flex items-center justify-between group hover:border-[#1A3066] transition-all">
-                  <div>
-                    <h5 className="font-bold text-sm text-[#1A3066]">{item}</h5>
-                    <p className="text-[11px] text-[#606770] mt-0.5">Rules of Origin (ROO) verification mandatory.</p>
+
+        <AnimatePresence>
+          {selectedAgreement && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="sticky top-8 h-fit"
+            >
+              <div className="card relative border-t-4 border-[#D4AF37] shadow-xl">
+                <button 
+                  onClick={() => setSelectedAgreement(null)}
+                  className="absolute top-4 right-4 text-[#606770] hover:text-[#1A3066] transition-colors"
+                >
+                  <X size={20} />
+                </button>
+                
+                <div className="mb-8">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`badge ${selectedAgreement.type === 'Regional' ? 'badge-legal' : 'badge-tax'}`}>
+                      {selectedAgreement.type}
+                    </span>
+                    <span className="badge bg-green-100 text-green-700 font-bold uppercase text-[10px] px-2 py-0.5 rounded">{selectedAgreement.status}</span>
                   </div>
-                  <Globe size={18} className="text-[#DADDE1] group-hover:text-[#D4AF37] transition-all" />
-               </button>
-            ))}
-          </div>
-        </div>
+                  <h3 className="text-xl font-bold text-[#1A3066] leading-tight">{selectedAgreement.name}</h3>
+                  <p className="text-xs text-[#D4AF37] font-bold tracking-widest mt-1 uppercase">Agreement Identifier: {selectedAgreement.id.toUpperCase()}</p>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <h4 className="text-[10px] font-bold text-[#606770] uppercase tracking-widest flex items-center gap-2">
+                      <BookOpen size={14} className="text-[#1A3066]" />
+                      About Agreement
+                    </h4>
+                    <p className="text-sm text-[#1C1E21] leading-relaxed italic border-l-2 border-[#D4AF37] pl-3">
+                      "{selectedAgreement.description}"
+                    </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h4 className="text-[10px] font-bold text-[#606770] uppercase tracking-widest flex items-center gap-2">
+                      <Globe size={14} className="text-[#1A3066]" />
+                      Member Countries
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedAgreement.member_countries.map(country => (
+                        <span key={country} className="text-[10px] font-bold bg-[#F2F3F5] text-[#1A3066] px-2 py-1 rounded border border-[#DADDE1]">
+                          {country}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h4 className="text-[10px] font-bold text-[#606770] uppercase tracking-widest flex items-center gap-2">
+                      <ShieldCheck size={14} className="text-[#1A3066]" />
+                      Strategic Benefits for JKDM
+                    </h4>
+                    <ul className="space-y-2">
+                      {selectedAgreement.key_benefits.map((benefit, i) => (
+                        <li key={i} className="flex gap-2 text-sm text-[#1C1E21]">
+                          <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-1.5 shrink-0" />
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="pt-6 border-t border-[#DADDE1] flex flex-col gap-3">
+                    <button className="btn-primary w-full py-3 text-xs flex items-center justify-center gap-2 shadow-lg">
+                      <FileText size={16} /> VIEW FULL TEXT (PDF)
+                    </button>
+                    <button className="w-full border border-[#DADDE1] text-[#1A3066] font-bold rounded-lg py-3 text-xs hover:bg-[#F2F3F5] transition-all flex items-center justify-center gap-2">
+                      CERTIFICATE VERIFICATION (E-PCO)
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

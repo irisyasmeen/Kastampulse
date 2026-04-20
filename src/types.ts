@@ -30,3 +30,14 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
 }
+
+export interface TradeAgreement {
+  id: string;
+  name: string;
+  acronym: string;
+  type: 'Regional' | 'Bilateral';
+  member_countries: string[];
+  description: string;
+  status: 'In Force' | 'Signed' | 'Under Negotiation';
+  key_benefits: string[];
+}
